@@ -1,4 +1,14 @@
-# What is Node.js?
+# This is a repo with code and slides of my comming soon talk at HH.js
+
+following are agenda and notes. This is work in progress.
+
+# Agenda
+* (optional) short introduction into Node.js
+* callback-spaghetti / callback-hell
+* one-function-module / higher-order-function-module
+* using callbacks
+* EventEmitter
+* Streams
 
 # Associations?
 spaghetti?
@@ -7,7 +17,7 @@ waterfall
 
 # about spaghetti
 Closures are power.
-"With great power comes great responsibility" -- Stan Lee via Peter Parkers Uncle
+"With great power comes great responsibility"
 Closures are key to many useful patterns and programming techniques. But also encourages to be misused for
 highly functions-nesting code aka callback-spaghetti
 
@@ -73,4 +83,14 @@ Line: EOL terminated byte sequences (readline)
 File: EOF terminated byte sequences (fs streams)
 Frame: byte sequences of (pre)defined size (http, udp)
 Object: JSON.parse-able strings (JSONStream)
+
+# License and Usage
+
+The code is presentational, may have terrible bugs and insecurities. Anyway, you can use it if you wish under the terms of the MIT License.
+
+The textual contents in the slides are public domain.
+
+The images, if any used, are licensed under the Creative Commons 2.0 License, the copyrights belong to creators.
+
+The Node.js logo and name are trademarks of Joyent Inc
 
