@@ -1,0 +1,24 @@
+{
+  "name": "spaghetti_noppen",
+  "version": "0.0.0",
+  "description": "HH.js talk, slides, examples",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/greelgorke/spaghetti-noppen.git"
+  },
+  "keywords": [
+    "talk",
+    "slides",
+    "node.js"
+  ],
+  "author": "Gregor Elke <greelgorke@gmail.com> (greelgorke.tumblr.com)",
+  "license": "MIT",
+  "readmeFilename": "README.md",
+  "dependencies" : {
+    "request":"*"
+  }
+}

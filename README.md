@@ -1,4 +1,4 @@
-# This is a repo with code and slides of my comming soon talk at HH.js
+# This is a repo with code and slides of my coming soon talk at HH.js
 
 following are agenda and notes. This is work in progress.
 
@@ -10,28 +10,58 @@ following are agenda and notes. This is work in progress.
 * EventEmitter
 * Streams
 
-# Associations?
-spaghetti?
-pyramid
-waterfall
+# Node.js
+
+## Positive
+non-blocking I/O
+server-side javascript
+EventLoop in a single thread
+vibrant community
+
+## promised lands
+scalability granted
+performance granted
+client-server code sharing granted
+
+## Negative
+spaghetti
+blocking CPU
+early state
+wheel reinvention
+
+# Spaghetti
+## (img: spaghetti)
+## code: a naive app
 
 # about spaghetti
-Closures are power.
-"With great power comes great responsibility"
-Closures are key to many useful patterns and programming techniques. But also encourages to be misused for
-highly functions-nesting code aka callback-spaghetti
+"With great closures comes great responsibility"
+Closures are key to many useful patterns and programming techniques.
+But also encourages to be misused for highly functions-nesting code aka callback-spaghetti
+cyclomatic complexity 7+ anyone?
 
-# The solution:
-*don't do that*, you don't have to
 
-# symptoms cure:
-- Function#bind, async
-- promises, fibers, magic (remember: responsibility)
+## The solution:
+well designed architecture (b)eats pasta
+analyze your code, locate unnecessary closures
+in most cases you need none or just one closure
 
-# Node way:
+## 1.
+*don't misuse closures*, you don't have to
+
+## 2.
+Function#bind: separate scope from logic
+it's like templates, just with logic
+
+## 3.
+flow control: sometimes it get's complicated
+async - it's more like cannelloni
+magic - promises, fibers. use it gently, but hide it away.
+
+# 4. Nodes philosophy
+callbacks are the nature of asynchronous javascript
+don't fight it, make it your strength
 - SRP, IoC, Encapsulation, unified + generic interfaces -
 sounds enterprisey?
-well designed architecture (b)eats pasta
 
 # Vision
 "I want programming computers to be like coloring with crayons and playing with
