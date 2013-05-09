@@ -19,7 +19,9 @@
   "license": "MIT",
   "readmeFilename": "README.md",
   "dependencies" : {
-    "request":"*"
+    "request":"*",
+    "socket.io":"*",
+    "lodash": "*"
   },
   "private":true
 }
