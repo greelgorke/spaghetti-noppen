@@ -19,6 +19,7 @@
   "license": "MIT",
   "readmeFilename": "README.md",
   "dependencies" : {
+    "stream-build":"*",
     "request":"*",
     "socket.io":"*",
     "lodash": "*"
