@@ -5,7 +5,11 @@
 
   function addPost(data) {
     var li = document.createElement('LI')
-    li.innerHTML = data.nickname + ': '+ data.message
+      , prefix = data.nickname
+    if (HHJS.imgPath && prefix !== 'HH.js'){
+      prefix = '<img src="' + HHJS.imgPath + prefix+'" alt="' + prefix + '" class="avatar-small"/>'
+    }
+    li.innerHTML = prefix + ': '+ data.message
     messageBox.appendChild(li)
   }
 

@@ -12,39 +12,32 @@ var theChain = []
 var defaultHeaders = {}
 
 var server = http.createServer(function(req, res){
-  // req.on('error', function(err){
-  //   console.error('request errored', err)
-  // })
-  // res.on('error', function(err){
-  //   console.error('response errored', err)
-  // })
 
-  // console.log('on request! -- ', req.url)
+  if (~req.url.indexOf('favicon.ico')){
+    res.writeHead(404)
+    return res.end()
+  }
+
   var currentChain = theChain.slice()
     , next
 
   function chainHandler (err, body, headers) {
     // 1. if err, i do some response, ignoring other arguments, and all done
     if ( err ) {
-      // console.error("handling error from -- ", next.name)
+      console.error("handling error from -- ", next.name)
       res.writeHead(err.statusCode || 500, err.message)
       return res.end(err.message)
     }
     // 2. if i was called without any arguments i just call the next thing on my list and wait.
     // oh, look, i pass myself to the next
-
-    if( body == null && headers == null){
+    if( body == null ){
       next = currentChain.shift()
       return next(req, chainHandler)
     }
     // 3. if i was called with body and optional headers, just do the good.
-    // console.log('respond to -- ', req.url, ' -- with -- ', next.name)
-    if ( headers == null){
-      headers = {}
+    if ( headers != null){
+      res.writeHead(200, headers)
     }
-    _.defaults(headers, defaultHeaders)
-
-    res.writeHead(200, headers)
     body.pipe(res)
   }
   chainHandler();

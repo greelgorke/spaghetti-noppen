@@ -21,6 +21,7 @@
   "dependencies" : {
     "stream-build":"*",
     "request":"*",
+    "hyperquest":"*",
     "socket.io":"*",
     "lodash": "*"
   },
