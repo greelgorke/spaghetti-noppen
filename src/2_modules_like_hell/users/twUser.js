@@ -1,10 +1,17 @@
 var request = require('request')
+var twauth = require('../../twauth')
+
 
 
 var twitterUserAPI = 'https://api.twitter.com/1.1/users/show.json?include_entities=false&screen_name='
   , twitterRequestOpts = { url: null
                          , method: 'GET'
                          , headers: { 'User-Agent': 'Node.js HH.js example naive'}
+                         , oauth: { consumer_key: twauth.key
+                                  , consumer_secret: twauth.secret
+                                  , token: twauth.token
+                                  , token_secret: twauth.tsecret
+                                  }
                          }
   , avaRequestOpts = { url: null
                      , method: 'GET'

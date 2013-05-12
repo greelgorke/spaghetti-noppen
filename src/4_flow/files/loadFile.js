@@ -5,8 +5,9 @@ module.exports = function loadIfExists(filename, callback){
   var filePath = path.join(__dirname,'../..','public' ,filename)
     , file = fs.createReadStream(filePath)
                   .on('error', function(err){
-                    callback(err , {statusCode: 404, body: 'File Not Found'})
+                    err.statusCode = 404
+                    err.message = 'File Not Found'
+                    callback(err)
                   })
-  // could be have also a header property
   callback(null, file)
 }

@@ -20,6 +20,7 @@
   "readmeFilename": "README.md",
   "dependencies" : {
     "stream-build":"*",
+    "JSONStream":"*",
     "request":"*",
     "hyperquest":"*",
     "socket.io":"*",

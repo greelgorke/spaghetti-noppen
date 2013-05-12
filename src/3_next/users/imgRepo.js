@@ -1,85 +1,51 @@
 var stream = require('stream')
 var Readable = stream.Readable
 var Transform = stream.Transform
+var EventEmitter = require('events').EventEmitter
+var request = require('request')
 
 var imageProviders = [ require('./ghUserImage')
                      , require('./twUserImage')
                      ]
+  , avaRequestOpts = { url: null
+                     , method: 'GET'
+                     , headers: { 'User-Agent': 'Node.js HH.js example naive'}
+                     , encoding: null
+                     }
+  // Here we just store img urls
+  , imageCache = Object.create(null)
+
 
 module.exports = function getImage (userName, callback) {
-  if ( imageCache[userName] != null ){
-    return callback(null, new ImageRead(userName))
+
+  function requestImage(url){
+    if ( imageCache[userName] == null )
+      imageCache[userName] = url
+
+    avaRequestOpts.url = url
+    callback(null, request(avaRequestOpts))
   }
 
-  var imageStream = new ImageStore(userName)
+  if ( imageCache[userName] != null ){
+    return requestImage(imageCache[userName])
+  }
 
   // proxing for parallel fetch, first success wins
-  var results = []
-  function cbProxy (err, stream) {
+  var referee = new EventEmitter()
+    , failed = 0
 
-    if ( stream && !~results.indexOf(true)){
-      results.push(true)
-      return callback(null, stream)
-    }
-
-    if ( arguments.length <= 1)
-      results.push(false)
-
-    if (results.length === imageProviders.length) {
-      var err = new Error('No image found')
-      err.statusCode = 404
-      callback(err)
-    }
-  }
+  referee
+    .once('url', requestImage)
+    .on('failed',function(){
+      failed += 1
+      if ( failed == imageProviders.length ) {
+        var err = new Error('Can not find or fetch the image')
+        err.statusCode = 404
+        callback(err)
+      }
+    })
 
   imageProviders.forEach(function(provider){
-    provider.call(null, userName, imageStream, cbProxy)
+    provider.call(null, userName, referee)
   })
 }
-
-// Here we just store images in memory. usually we could save them to hd, database or cloud service
-var imageCache = Object.create(null)
-
-function ImageRead(cacheKey){
-  if( ! (this instanceof ImageRead) ) return new ImageRead(cacheKey)
-  Readable.call(this)
-  this.buf = imageCache[cacheKey]
-
-  this.offset = 0
-
-}
-require('util').inherits(ImageRead,Readable)
-
-ImageRead.prototype._read = function(size) {
-  if ( !size )
-    size = this.buf.length
-  this.push( this.buf.slice( this.offset, size ) )
-  this.offset += size
-  if ( this.offset >= this.buf.length) {
-    this.push(null)
-  }
-}
-
-
-function ImageStore(cacheKey){
-  if( ! (this instanceof ImageStore) ) return new ImageStore(cacheKey)
-  Transform.call(this)
-  this.offset = 0
-  this.key = cacheKey
-}
-require('util').inherits(ImageStore,Transform)
-
-ImageStore.prototype.init = function(size) {
-  this.buf = imageCache[this.key] = new Buffer(size)
-}
-
-ImageStore.prototype._transform = function(chunk, encoding, callback) {
-  if ( this.offset >= this.buf.length ) {
-    callback(new Error('image buffer is full ') )
-  }
-  chunk.copy( this.buf, this.offset )
-  this.offset += chunk.length
-  this.push(chunk)
-  callback()
-}
-
