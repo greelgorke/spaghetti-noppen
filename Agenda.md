@@ -7,10 +7,10 @@
 * working with Node over a year or so
 
 ## Personal disclaimer
-* this talk contains brand new examples: bugs included.
 * my English sucks, patches welcome, issues too.
 * if I'm talking strange or too quite, tell me.
 * lot's of code incoming
+* this talk contains hot coded examples: bugs included.
 
 ## Talk disclaimer
 * I'm not representing Node.js Community.
