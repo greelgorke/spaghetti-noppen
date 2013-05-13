@@ -6,6 +6,7 @@ var githubUsersAPI = 'https://api.github.com/users/'
                         , method: 'GET'
                         // , json: true
                         , headers: { 'User-Agent': 'Node.js HH.js example naive'}
+                        , qs : require('../../ghauth')
                         }
 
 

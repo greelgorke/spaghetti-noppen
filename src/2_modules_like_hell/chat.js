@@ -9,7 +9,7 @@ module.exports = function chatInit(server, removeUser){
     })
 
     socket.on('message',function(data){
-      socket.broadcast.emit('message', data)
+      io.sockets.emit('message', data)
     })
 
     socket.on('disconnect', function(){

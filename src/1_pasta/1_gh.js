@@ -2,7 +2,7 @@ var http = require('http')
   , fs = require('fs')
   , url = require('url')
   , request = require('request')
-  , template = fs.readFileSync("../app.html", 'utf8');
+  , template = fs.readFileSync(__dirname + "/app.html", 'utf8')
   , sio = require('socket.io')
 
 var githubRequest = { url: null
@@ -25,11 +25,11 @@ var server = http.createServer(function(req, res){
     res.writeHead(404,'no favicon bro')
     return res.end()
   }
-  if('/app.js' === reqUrl.pathname){
-    return fs.readFile(__dirname + '/../public/app.js', function(err,file){
+  if('/js/app.js' === reqUrl.pathname){
+    return fs.readFile(require('path').resolve(__dirname , '../public/js/app.js'), function(err,file){
       if(err){
-        res.writeHead(500)
-        return res.end()
+        res.writeHead(500, err.message)
+        return res.end(err.message)
       }
       res.writeHead(200)
       res.end(file)
@@ -44,6 +44,7 @@ var server = http.createServer(function(req, res){
   var githubRequestOpts = { url: 'https://api.github.com/users/'+userName
                       , method: 'GET'
                       , headers: { 'User-Agent': 'Node.js HH.js example naive'}
+                      , qs : require('../ghauth')
                       }
   request(githubRequestOpts, function(userErr, userRes, user){
     if( userErr ) {
@@ -52,7 +53,7 @@ var server = http.createServer(function(req, res){
       return res.end()
     }
     if(userRes.statusCode !== 200) {
-      console.error('userRes',userRes.statusCode)
+      console.error('userRes',userRes.statusCode, user, userRes.headers)
       res.writeHead(404, 'Github user not found')
       return res.end()
     }
@@ -77,7 +78,7 @@ var server = http.createServer(function(req, res){
       }
       var userImage = avatar.toString('base64')
 
-      var content = template.replace('${usr}', userName).replace('${img}',userImage)
+      var content = template.replace(/\$\{name\}/g, userName).replace('${image}',userImage)
       res.writeHead('200')
       res.end(content)
     })
@@ -91,13 +92,13 @@ var io = sio.listen(server)
 io.sockets.on('connection', function(socket){
   socket.emit('greeting',{message: 'Hello to the HH.js'})
   socket.on('message',function(data){
-    socket.broadcast.emit('message', data)
+    io.sockets.emit('message', data)
   })
 })
 
 server.listen(3000, function(err){
   if( err )
-    return console.error('Unaeble to listen', err)
+    return console.error('Unable to listen', err)
   console.log('Listening on 3000')
 
 })

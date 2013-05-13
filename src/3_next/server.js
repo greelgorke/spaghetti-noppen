@@ -9,8 +9,6 @@ var chat = require('./chat')
 
 var theChain = []
 
-var defaultHeaders = {}
-
 var server = http.createServer(function(req, res){
 
   if (~req.url.indexOf('favicon.ico')){

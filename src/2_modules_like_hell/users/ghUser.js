@@ -5,6 +5,7 @@ var githubUsersAPI = 'https://api.github.com/users/'
   , githubRequestOpts = { url: null
                         , method: 'GET'
                         , headers: { 'User-Agent': 'Node.js HH.js example naive'}
+                        , qs : require('../../ghauth')
                         }
   , avaRequestOpts = { url: null
                      , method: 'GET'

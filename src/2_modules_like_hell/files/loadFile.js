@@ -16,7 +16,7 @@ function loadIfExists(filename, callback){
 }
 
 function load(filePath, size, callback){
-  var ext         = fileName.substring(fileName.lastIndexOf('.')+1)
+  var ext         = filePath.substring(filePath.lastIndexOf('.')+1)
     , contentType = types[ ext ] || 'text/plain'
     , headers     = { 'Content-Length': size
                     , 'Content-Type': contentType || 'text/plain'

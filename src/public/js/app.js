@@ -14,7 +14,6 @@
   }
 
   input.form.addEventListener('submit', function(e){
-    console.log('form on submit')
     e.preventDefault()
     var post = input.value
     input.value = ''

@@ -12,14 +12,7 @@ var theChain = []
 var defaultHeaders = {}
 
 var server = http.createServer(function(req, res){
-  // req.on('error', function(err){
-  //   console.error('request errored', err)
-  // })
-  // res.on('error', function(err){
-  //   console.error('response errored', err)
-  // })
 
-  // console.log('on request! -- ', req.url)
   var currentChain = theChain.slice()
     , next
 

@@ -33,7 +33,7 @@ function twitterUser (username, add, callback) {
     if(userRes.statusCode !== 200) {
       return callback(null, false)
     }
-    twitterUserImage(JSON.parse(user), add, callback) // JSON.parse should be try-cached
+    twitterUserImage(JSON.parse(user), add, callback)
   })
 }
 

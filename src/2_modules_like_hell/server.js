@@ -8,12 +8,6 @@ var chat = require('./chat')
 var usersHash = Object.create(null)
 
 var server = http.createServer(function(req, res){
-  req.on('error', function(err){
-    console.error('request errored', err)
-  })
-  res.on('error', function(err){
-    console.error('response errored', err)
-  })
 
   function justInCase(err){
     res.writeHead(500, err.message)
@@ -25,7 +19,6 @@ var server = http.createServer(function(req, res){
       return justInCase(err)
     }
     var parsedUrl = url.parse(req.url)
-    console.log('serving:', parsedUrl.pathname)
     var userName = parsedUrl.pathname.split('/')[1]
     if( !userName ){
       res.writeHead(400, 'You need a name, tho!')
@@ -42,7 +35,8 @@ var server = http.createServer(function(req, res){
       if (err) {
         image = new Buffer()
       }
-      render(res,{name:userName, image:image}, justInCase)
+
+      render(res,{name:userName, image:image.toString('base64')}, justInCase)
     })
   })
 })
