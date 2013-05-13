@@ -1,7 +1,7 @@
 (function(){
   var messageBox = document.querySelector('.messages')
     , input = document.querySelector('.postinput')
-    , socket = io.connect('http://localhost:3000')
+    , socket = io.connect()
 
   function addPost(data) {
     var li = document.createElement('LI')
