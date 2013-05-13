@@ -5,15 +5,17 @@ module.exports = function chatInit(server, removeUser){
 
   io.sockets.on('connection', function(socket){
     socket.once('nickname', function(data){
-      socket.nickname = data.nickname
+      socket.set('nickname', data.nickname)
     })
 
     socket.on('message',function(data){
-      socket.broadcast.emit('message', data)
+      io.sockets.emit('message', data)
     })
 
     socket.on('disconnect', function(){
-      removeUser(socket.nickname)
+      socket.get('nickname', function(err, name){
+        removeUser(name)
+      })
     })
 
     socket.emit('greeting',{message: 'Welcome to the HH.js', nickname : 'HH.js'})

@@ -21,6 +21,7 @@
   "dependencies" : {
     "stream-build":"*",
     "JSONStream":"*",
+    "event-stream":"*",
     "request":"*",
     "hyperquest":"*",
     "socket.io":"*",

@@ -1,31 +1,26 @@
-var stream = require('stream')
+var through = require('event-stream').through
 
-function Flow(){
-  if( ! (this instanceof Flow) ) return new Flow()
-  stream.Transform.call(this,{objectMode:true, decodeStrings : false})
-}
-require('util').inherits(Flow,stream.Transform)
+function flow(handleContext){
+  if ('function' !== typeof handleContext)
+    throw new TypeError('handleContext should be function(context,done)')
 
-Flow.prototype._handleContext = function(context, done) {
-  throw new Error('Implement this')
-}
+  var theThrough = through(function(context) {
+    var self = this
 
-Flow.prototype._transform = function(context, e, cb) {
-  if ( context.handled ) {
-    this.push(context)
-    return cb()
-  }
-  this.handleContext(context, function(err, result){
-    if ( err || result ){
-      context.handled = true
-      context.error = err
-      context.result = result
+    if ( context.handled ) {
+      return self.queue(context)
     }
-    this.push(context)
-    return cb()
-    }
+
+    handleContext(context, function(err, result){
+      if ( err || result ){
+        context.handled = true
+        context.error = err
+        context.result = result
+      }
+      self.queue(context)
+    })
   })
+  return theThrough
 }
 
-
-module.exports = Flow
+module.exports = flow

@@ -1,10 +1,9 @@
-var Flow = require('./flow')
+var flow = require('./flow')
 var url = require('url')
 
-module.exports = exports = new Flow()
-
-exports._handleContext = function urlParser(context, done){
+module.exports = exports = flow( function urlParser(context, done){
   context.parsedUrl = url.parse(context.req.url)
   context.pathname = context.parsedUrl.pathname
   done()
-}
+})
+

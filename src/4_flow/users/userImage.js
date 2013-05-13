@@ -1,10 +1,8 @@
-var Flow = require('../flow')
+var flow = require('../flow')
 var imgRepo = require('./imgRepo')
 
 // path: /image/:someusername
-module.exports = exports = new Flow()
-
-exports._handleContext = function(ctx, done){
+module.exports = flow( function userImage(ctx, done){
   var path = ctx.pathname.split('/')
     , imageKey = path[2] || ''
     , err
@@ -19,4 +17,4 @@ exports._handleContext = function(ctx, done){
   }
 
   imgRepo(imageKey, done)
-}
+})

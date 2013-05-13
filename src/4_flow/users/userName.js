@@ -1,14 +1,12 @@
-var Flow = require('../flow')
+var flow = require('../flow')
 var usersHash = Object.create(null)
 
-module.exports = exports = new Flow()
-
-exports._handleContext = function userName(ctx, done){
+module.exports = flow( function userName(ctx, done){
   var userName = ctx.pathname.split('/')
     , err
 
   if ( userName[1] !== 'user') {
-    return callback()
+    return done()
   }
 
   userName = userName[2]
@@ -27,8 +25,8 @@ exports._handleContext = function userName(ctx, done){
   usersHash[userName] = true
   ctx.userName = userName
   done()
-}
+})
 
-exports.delUser = function(username){
+module.exports.delUser = function(username){
   delete usersHash[username]
 }

@@ -1,6 +1,3 @@
-var stream = require('stream')
-var Readable = stream.Readable
-var Transform = stream.Transform
 var EventEmitter = require('events').EventEmitter
 var request = require('request')
 
