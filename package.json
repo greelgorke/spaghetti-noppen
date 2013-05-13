@@ -23,7 +23,6 @@
     "JSONStream":"*",
     "event-stream":"*",
     "request":"*",
-    "hyperquest":"*",
     "socket.io":"*",
     "lodash": "*"
   },
