@@ -10,6 +10,7 @@
 * this talk contains brand new examples: bugs included.
 * my English sucks, patches welcome, issues too.
 * if I'm talking strange or too quite, tell me.
+* lot's of code incoming
 
 ## Talk disclaimer
 * I'm not representing Node.js Community.
