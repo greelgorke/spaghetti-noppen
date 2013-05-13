@@ -95,7 +95,7 @@
 * what about routers: a router is just a plugin, that maintains a subchain (or a tree of sub-chains)
 * Questions so far?
 
-## The next step: data flowing through the app.
+## The next step: data flowing through the app
 * Streams as flow control: design your app as a pipeline
 * If your app transform string inputs: do core Streams, they're good till awesome
 * heard about Flow Design? For node you can find something like that too: event-stream
